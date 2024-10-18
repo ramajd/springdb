@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import io.github.ramajd.springdb.TestDataUtil;
 import io.github.ramajd.springdb.domain.Book;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,11 +25,7 @@ public class BookDaoImplTest {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSql() {
-        Book book = Book.builder()
-                .isbn("978-1-56619-909-4")
-                .title("The Clean Coder: A Code of Conduct for Professional Programmers")
-                .authorId(1L)
-                .build();
+        Book book = TestDataUtil.createTestBook();
 
         underTest.create(book);
 

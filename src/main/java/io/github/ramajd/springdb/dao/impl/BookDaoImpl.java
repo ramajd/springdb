@@ -8,10 +8,12 @@ import java.util.Optional;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import io.github.ramajd.springdb.dao.BookDao;
 import io.github.ramajd.springdb.domain.Book;
 
+@Component
 public class BookDaoImpl implements BookDao {
 
     private final JdbcTemplate jdbcTemplate;
