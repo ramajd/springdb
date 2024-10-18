@@ -3,8 +3,11 @@ package io.github.ramajd.springdb.dao.impl;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
+import javax.swing.tree.RowMapper;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -37,6 +40,16 @@ public class AuthorDaoImplTest {
                 eq(author.getName()),
                 eq(author.getAge()));
 
+    }
+
+    @Test
+    public void testThatFindOneAuthorGeneratesCorrectSql() {
+        underTest.findOne(1L);
+
+        verify(jdbcTemplate).query(
+                eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+                eq(1L));
     }
 
 }

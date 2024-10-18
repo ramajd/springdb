@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,6 +37,16 @@ public class BookDaoImplTest {
                 eq(book.getIsbn()),
                 eq(book.getTitle()),
                 eq(book.getAuthorId()));
+    }
+
+    @Test
+    public void testThatFindOneBookGeneratesCorrectSql() {
+        underTest.findOne("978-1-56619-909-4");
+
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
+                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
+                eq("978-1-56619-909-4"));
     }
 
 }
